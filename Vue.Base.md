@@ -65,3 +65,39 @@
     组件配置==>VueComponent实例=>render=>Virtual DOM => DOM
     
     组件的本质是生成虚拟DOM
+
+4、keep-alive：组件缓存，include属性是以‘,’分割的字符串或者数组，每一个字符串是对应页面的name属性（注意：此name不是route配置中的name，而是vue文件中的name属性）。
+
+5、Vuex实现登陆持久化
+    Vuex可以使用plugins选项，plugin内export出一个方法，该方法接受store为参数，并且会在store初始化的时候调用这个方法。
+    store.subscribe方法可以监听所有的mutation变化，通过不同的mutation去对数据进行localStorage的本地存储
+
+    ```
+    persist.js
+    export default store => {
+        if (localStorage) {
+            // store初始化时将localStorage中的状态还原到Vuex中
+            const user = JSON.parse(localStorage.getItem('user'));// 反///序列化
+            if (user) {
+                store.commit('login', user);
+            }
+        }
+
+        // 用户状态发生变化，使用相应的变化更新localStorage
+        store.subscribe((mutation, state) => {
+            // mutation.type(执行的mutation)
+            // mutation.type.startsWith('')匹配以约定字符串开头的mutation
+        })
+    }
+    ```
+
+    ```
+    store/index.js
+
+    import persist from './persist.js'
+    export default new Vuex.store ({
+        ...
+        plugins: [ persist ],
+        ...
+    })
+    ```
