@@ -13,6 +13,17 @@ const routes = [
         path: '/about',
         name: 'About',
         component: () => import('@/views/About.vue'),
+        children: [
+            {
+                path: '/about/child',
+                name: 'child',
+                component: {
+                    render(h) {
+                        return h('div', 'about children')
+                    }
+                },
+            }
+        ],
     }
 ];
 

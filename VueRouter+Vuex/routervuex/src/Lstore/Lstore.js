@@ -16,6 +16,9 @@ class Store {
         let computed = {};
         Object.keys(getters).forEach((key) => {
             computed[key] = this.partial(getters[key], this.state);
+            Object.defineProperty(this.getters, key, {
+                get: () => this.getters[key]
+            })
         })
         this.getters = new Vue({
             computed,
