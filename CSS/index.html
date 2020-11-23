@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 500px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 清除浮动 -->
+    <p>清除浮动</p>
+    <!-- <div class='box' style="overflow: hidden;"> -->
+    <div class='box' style="display: flex;">
+        <div style="float: left;">浮动元素</div>
+    </div>
+
+    <!-- 解决外边距重合 -->
+    <p>解决外边距重合</p>
+    <div class='box' style="overflow: hidden;">
+        <div style="margin: 20px;background: red;">up</div>
+        <div style="overflow: hidden;">
+            <div style="margin: 20px;background: green;">down</div>
+        </div>
+    </div>
+
+    <!-- 右侧自适应 -->
+    <p>右侧自适应</p>
+    <div class='box' style="width: 100%;">
+        <div style="width: 100px;height: 200px;background: red;float: left;"></div>
+        <div style="margin-left: 100px;height: 300px;background: lightcoral;"></div>
+    </div>
+</body>
+
+</html>
