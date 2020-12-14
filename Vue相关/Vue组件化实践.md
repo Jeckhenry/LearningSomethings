@@ -19,7 +19,7 @@
 
 7、$attrs/$listeners
 
-    ** 子组件中使用v-bind="$attrs"后可以使用一下属性，避免在父组件上重复渲染相同属性
+    ** 子组件中使用v-bind="$attrs"后可以使用以下属性，避免在父组件上重复渲染相同属性
     export default {
         inheritAttrs: false, // 避免设置到根元素上
     }
@@ -64,8 +64,8 @@
         // Component为动态传入的组件
         const vm = new Vue({
             render: h => h(Component, { props })
-        }).$mount() // $mount()不指定宿主元素，会创建真是DOM，但是不会追加
-        document.body.appendChild(vm.$el);// vm.$el获取真是DOM
+        }).$mount() // $mount()不指定宿主元素，会创建真实DOM，但是不会追加
+        document.body.appendChild(vm.$el);// vm.$el获取真实DOM
         const comp = vm.$children[0];
         comp.remove = () => {
             document.body.removeChild(vm.$el);
