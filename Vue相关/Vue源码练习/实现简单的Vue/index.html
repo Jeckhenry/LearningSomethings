@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ counter }}</p>
+        <p>{{ msg }}</p>
+
+        <p>qweqw</p>
+
+        <div>
+            l-text
+            <span l-text='msg'></span>
+        </div>
+        <div>-------</div>
+        <div>
+            l-html
+            <span l-html='htmlStr'></span>
+        </div>
+    </div>
+    <script src='./util/Compiler.js'></script>
+    <script src='./util/LVue.js'></script>
+    <script>
+        /*
+                        observer数据        Dep
+            new MVVM                                watcher实例
+                        compiler模板    updater
+        */
+        const app = new LVue({
+            el: '#app',
+            data: {
+                counter: 1,
+                msg: '自己瞎整',
+                htmlStr: '<span style="color: red;">测试html</span>'
+            },
+        });
+        app.$data.msg;
+        app.msg = '测试';
+    </script>
+</body>
+
+</html>
