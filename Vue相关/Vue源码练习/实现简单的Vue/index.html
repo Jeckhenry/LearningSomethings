@@ -40,8 +40,11 @@
                 htmlStr: '<span style="color: red;">测试html</span>'
             },
         });
-        app.$data.msg;
-        app.msg = '测试';
+        // app.$data.msg;
+        // app.msg = '测试';
+        setInterval(() => {
+            app.counter++;
+        }, 1000);
     </script>
 </body>
 

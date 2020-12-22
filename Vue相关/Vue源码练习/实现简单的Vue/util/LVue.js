@@ -1,19 +1,28 @@
 /*
     创建LVue构造函数
+    在Vue2.0中每一个组件只有一个Watcher，由虚拟DOM执行更新策略
 */
 function defineReactive(obj, key, val) {
+    // 递归处理
+    observe(val);
+
+    // 创建一个Dep和key一一对应
+    const dep = new Dep();
+
     Object.defineProperty(obj, key, {
         get() {
             console.log(`getting ${key} value`);
+            // 依赖收集
+            Dep.target && dep.addDep(Dep.target);
             return val;
         },
         set(newVal) {
             console.log(`setting ${key} ${newVal}`);
-            if (typeof newVal === 'object') {
-                observe(newVal);
-            }
             if (newVal !== val) {
+                observe(newVal);
                 val = newVal;
+                // 通知更新
+                dep.notify();
             }
         },
     });
@@ -75,4 +84,36 @@ class Observer {
     }
 
     // 数组数据响应化----作业
+}
+
+
+// 创建观察者:保存更新函数，值变化时执行更新函数
+// const watchers = [];
+class Watcher {
+    constructor(vm, key, updateFn) {
+        this.vm = vm;
+        this.key = key;
+        this.updateFn = updateFn;
+        // watchers.push(this);
+        // 在Dep.target静态属性上设置为当前watcher实例
+        Dep.target = this;
+        this.vm[key]; // 读取触发getter
+        Dep.target = null; // 收集完销毁
+    }
+    update() {
+        this.updateFn.call(this.vm, this.vm[this.key]);
+    }
+}
+
+// Dep:依赖收集，管理key对应的watcher实例
+class Dep {
+    constructor() {
+        this.deps = [];
+    }
+    addDep(dep) {
+        this.deps.push(dep);
+    }
+    notify() {
+        this.deps.forEach(wa => wa.update());
+    }
 }

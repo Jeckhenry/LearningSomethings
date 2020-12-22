@@ -48,9 +48,25 @@ class Compiler {
         return node.nodeType === 3 && /\{\{(.*)\}\}/.test(node.textContent);
     }
 
+    // 公共编译函数
+    update(node, exp, dir) {
+        // 指令对应的更新函数dirUpdater
+        const fn = this[dir + 'Updater'];
+        fn && fn(node, this.$vm[exp]);
+        // 更新处理
+        new Watcher(this.$vm, exp, function (val) {
+            fn && fn(node, val);
+        });
+    }
+
     // 编译插值绑定
     compileText(node) {
-        node.textContent = this.$vm[RegExp.$1.trim()];
+        // 第二个参数代表key
+        this.update(node, RegExp.$1.trim(), 'text');
+    }
+
+    textUpdater(node, value) {
+        node.textContent = value;
     }
 
     // 编译节点
@@ -78,12 +94,18 @@ class Compiler {
     }
 
     // 编译l-text
-    text(node, value) {
-        node.textContent = this.$vm[value];
+    text(node, exp) {
+        // node.textContent = this.$vm[exp];
+        this.update(node, exp, 'text');
     }
 
     // 编译l-html
-    html(node, value) {
-        node.innerHTML = this.$vm[value];
+    html(node, exp) {
+        // node.innerHTML = this.$vm[value];
+        this.update(node, exp, 'html');
+    }
+
+    htmlUpdater(node, value) {
+        node.innerHTML = value;
     }
 }
