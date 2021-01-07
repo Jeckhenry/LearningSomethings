@@ -23,6 +23,15 @@
             l-html
             <span l-html='htmlStr'></span>
         </div>
+        <div>
+            <p @click='alertInfo'>数组</p>
+            <p>{{ arr }}</p>
+        </div>
+
+        <div>
+            <p>v-model</p>
+            <p><input type="text" l-model='counter'></p>
+        </div>
     </div>
     <script src='./util/Compiler.js'></script>
     <script src='./util/LVue.js'></script>
@@ -37,14 +46,21 @@
             data: {
                 counter: 1,
                 msg: '自己瞎整',
-                htmlStr: '<span style="color: red;">测试html</span>'
+                htmlStr: '<span style="color: red;">测试html</span>',
+                arr: [1, 2, 3],
+            },
+            methods: {
+                alertInfo() {
+                    console.log(12312, app.counter);
+                }
             },
         });
         // app.$data.msg;
         // app.msg = '测试';
         setInterval(() => {
-            app.counter++;
+            // app.counter++;
         }, 1000);
+        app.arr.push(4);
     </script>
 </body>
 

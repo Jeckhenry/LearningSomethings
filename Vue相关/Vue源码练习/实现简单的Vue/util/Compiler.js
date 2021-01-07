@@ -85,7 +85,26 @@ class Compiler {
                 const dir = attrName.slice(2);
                 this[dir] && this[dir](node, attrValue);
             }
+            // 事件处理
+            if (this.isEvent(attrName)) {
+                // @click='xx'
+                const dir = attrName.slice(1);
+                // 事件监听
+                this.eventHandler(node, dir, attrValue);
+            }
         })
+    }
+
+    // 判断是否是事件
+    isEvent(dir) {
+        return dir.indexOf('@') === 0;
+    }
+
+    eventHandler(node, dir, exp) {
+        const fn = this.$vm.$options.methods[exp];
+        node.addEventListener(dir, function () {
+            fn.apply(this.$vm, arguments);
+        });
     }
 
     //判断是否是指令
@@ -107,5 +126,20 @@ class Compiler {
 
     htmlUpdater(node, value) {
         node.innerHTML = value;
+    }
+
+    // 编译l-model
+    model(node, exp) {
+        // update方法只完成赋值和更新
+        this.update(node, exp, 'model');
+
+        // 事件监听
+        node.addEventListener('input', (e) => {
+            this.$vm[exp] = e.target.value;
+        });
+    }
+
+    modelUpdater(node, value) {
+        node.value = value;
     }
 }
