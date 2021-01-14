@@ -167,26 +167,87 @@ console.log('child2', child2.jjl); // [456, 234]
 */
 
 /* ES6实现继承（extends） */
-class Parent {
-    constructor(name) {
-        this.name = name;
-    }
+// class Parent {
+//     constructor(name) {
+//         this.name = name;
+//     }
+//     getName() {
+//         return this.name;
+//     }
+//     song() {
+//         console.log('sing...');
+//     }
+// }
+
+// class Child extends Parent {
+//     constructor(name, age = 20) {
+//         super(name);
+//         this.age = age;
+//     }
+// }
+
+// let child = new Child('lixx');
+// console.log(child);
+// console.log(child.getName());
+// child.song();
+
+function Parent() {
+    this.name = 'lixx';
+}
+Parent.prototype.age = 123;
+Parent.prototype.song = function () {
+    console.log('sing...');
+}
+
+function Child() {
+    this.type = 'child';
+}
+Child.prototype = new Parent;
+let c1 = new Child;
+Parent.prototype.dance = function () {
+    console.log('dancing...');
+}
+// console.log(c1.name, c1.age);
+// c1.song();
+// c1.dance();
+// console.log(c1.__proto__);
+
+function Child1() {
+    Parent.call(this);
+    this.type = 'child';
+}
+let c2 = new Child1;
+// console.log(c2.name);
+// console.log(c2.__proto__);
+
+function Child2() {
+    Parent.call(this);
+    this.type = 'child';
+}
+Child2.prototype = new Parent;
+Child2.prototype.constructor = Child2;
+let c3 = new Child2;
+// console.log(c3);
+// c3.song();
+// c3.dance();
+
+
+let p1 = {
+    name: 'lixx',
+    hobiees: [1, 2, 3],
     getName() {
         return this.name;
-    }
-    song() {
-        console.log('sing...');
-    }
-}
+    },
+};
+let c4 = Object.create(p1);
+// console.log(c4.getName());
 
-class Child extends Parent {
-    constructor(name, age = 20) {
-        super(name);
-        this.age = age;
+function clone(oriObj) {
+    let clone = Object.create(oriObj);
+    clone.getHobiees = function () {
+        return this.hobiees;
     }
+    return clone;
 }
-
-let child = new Child('lixx');
-console.log(child);
-console.log(child.getName());
-child.song();
+let c5 = clone(p1, p1);
+console.log(c5.getHobiees());

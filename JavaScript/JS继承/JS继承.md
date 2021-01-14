@@ -174,5 +174,31 @@ console.log('child2', child2.jjl); // [456, 234]
 ```
 
 ## ES6实现继承，关键字extends
+事实上在转化为ES5后也是采用了寄生组合式继承。
 
+```
+class Parent {
+    constructor(name) {
+        this.name = name;
+    }
+    getName() {
+        return this.name;
+    }
+    song() {
+        console.log('sing...');
+    }
+}
+
+class Child extends Parent {
+    constructor(name, age = 20) {
+        super(name);
+        this.age = age;
+    }
+}
+
+let child = new Child('lixx');
+console.log(child);
+console.log(child.getName());
+child.song();
+```
 
