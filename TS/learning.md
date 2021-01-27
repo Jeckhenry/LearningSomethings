@@ -133,3 +133,4 @@ class Bus extends Auto implements AutoInterface { }
 
     (A | B) extends U ? x : y
     相当于 A extends U ? x : y | B extends U ? x : y
+
