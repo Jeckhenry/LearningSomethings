@@ -7,7 +7,7 @@
 // 1、替换数组原型中的7个方法
 const orginalProto = Array.prototype;
 const arrayProto = Object.create(orginalProto); // 备份原型，修改备份
-['pop', 'push', 'shift', 'unshift', 'sort', 'reverse'].forEach((method) => {
+['pop', 'push', 'shift', 'unshift', 'sort', 'reverse', 'splice'].forEach((method) => {
     arrayProto[method] = function () {
         // 执行原始操作
         orginalProto[method].apply(this, arguments);

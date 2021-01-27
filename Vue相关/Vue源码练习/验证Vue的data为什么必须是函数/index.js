@@ -16,6 +16,10 @@ class P2 {
     }
 }
 
+let obj = {
+    name: 'lixx',
+    sex: 'male'
+}
 
 function getObj() {
     let obj = {
@@ -24,10 +28,14 @@ function getObj() {
     }
     return obj;
 }
-let pp1 = new P1(getObj());
-let pp2 = new P2(getObj());
+// let pp1 = new P1(getObj());
+let pp2 = new P1(getObj());
+let pp1 = new P1(obj);
+// let pp2 = new P1(obj);
 
-pp1.changeValue();
+// pp1.changeValue();
+pp2.changeValue();
 
-console.log(pp1.value);
-console.log(pp2.value);
+
+console.log(pp1.value, 'pp1');
+console.log(pp2.value, 'pp2');
