@@ -35,6 +35,7 @@ let timer = null
 interval(func, wait){
     let interv = function(){
         func.call(null);
+        if (!timer) return;
         timer=setTimeout(interv, wait);
     };
     timer= setTimeout(interv, wait);

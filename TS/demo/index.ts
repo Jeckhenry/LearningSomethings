@@ -391,8 +391,36 @@ type T92 = Extract<'a' | 'b' | 'c', 'a' | 'e'>;
 type T10 = ReturnType<() => ''>;
 
 
+interface Pl {
+    name: string
+}
+interface Pl {
+    age: number
+}
+let d: Pl = {
+    name: '',
+    age: 10
+}
 
+type LOO = { name: string }
+type LOO1 = { age: number }
 
+type LOO2 = { hig: number } & Pl
+// type LOO2 = { hig: number } & LOO
 
+interface Pll extends Pl {
+    hig: number
+}
+interface Plll extends LOO1 {
+    hig: number
+}
+// let kk: Plll = {}
+class KK implements LOO {
+    name: string
+    constructor(name: string) {
+        this.name = name;
+    }
+}
 
+type myString = string
 

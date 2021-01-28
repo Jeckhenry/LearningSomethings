@@ -115,6 +115,17 @@ class Bus extends Auto implements AutoInterface { }
 2、交叉类型和联合类型
     交叉类型：&连接，取并集。
 
+    type和interface 区别：
+    1）interface可以合并同名接口（属性合并）
+    2）type可以继承type，也可以继承interface，使用'&'
+    3）interface可以继承interface，也可以继承type，使用'extends'
+    4）class可以实现type，可以实现interface，使用implements
+    5）interface只能表示function、object、class，而type还可以表示其他类型,(type myString = string)
+    6）interface只能定义新类型，而type可以基于已有类型定义新类型，partial（转化为可选类型）、pick（自定义选择key）
+        readonly（转化为只读）、record（选择已有类型作为数据类型，type p = { name: string },
+        type Lx = Record('a' | 'b', P)）
+
+
 3、索引类型 keyof T
 
 4、映射类型
