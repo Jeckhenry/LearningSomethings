@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+
+    <div id='app'>
+        <cp ll=1 nam='q'></cp>
+        <cp ll=1 nam='w'></cp>
+        <cp ll=2></cp>
+        <hr>
+        <!-- <cpp></cpp>
+        <cpp></cpp>
+        <cpp></cpp> -->
+    </div>
+
+    <script>
+        const obj = {
+            value: 1,
+        };
+        const tmp = '<div><div>计数：{{ count.value }}</div><button @click="setCount">button增加</button></div>';
+        Vue.component('cp', {
+            template: tmp,
+            props: ['ll', 'nam'],
+            data() {
+                // if (this.$props.ll == 2) return {
+                //     count: 1
+                // }
+                // return obj;
+                return {
+                    count: this.$props.ll == 1 ? obj : {
+                        value: 1
+                    },
+                }
+            },
+            watch: {
+                'count.value': (n) => {
+                    console.log(n, this);
+                }
+            },
+            methods: {
+                setCount() {
+                    this.count.value += 1;
+                }
+            },
+        });
+        const tmp2 = '<div><div>{{ count }}</div><button @click="setCount">button增加</button></div></div>';
+        Vue.component('cpp', {
+            template: tmp2,
+            data() {
+                return obj
+            },
+            methods: {
+                setCount() {
+                    this.count += 1;
+                }
+            },
+        });
+        const app = new Vue({
+            el: '#app',
+        });
+    </script>
+</body>
+
+</html>

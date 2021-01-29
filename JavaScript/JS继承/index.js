@@ -251,3 +251,6 @@ function clone(oriObj) {
 }
 let c5 = clone(p1, p1);
 console.log(c5.getHobiees());
+
+const dd = null
+console.log(dd);
