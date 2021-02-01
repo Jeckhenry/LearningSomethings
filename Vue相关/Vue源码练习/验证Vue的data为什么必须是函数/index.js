@@ -73,3 +73,59 @@ const P03 = new Obj({
 // console.log(P01);
 // console.log(P02);
 // console.log(P03);
+
+// 发布订阅
+class Emittter {
+    constructor(name, age) {
+        this.events = {}
+        this.name = name;
+        this.age = age;
+    }
+    on(eventName, callback) {
+        if (!this.events[eventName]) {
+            this.events[eventName] = [callback];
+        } else {
+            this.events[eventName].push(callback);
+        }
+    }
+    emit(eventName, ...rest) {
+        if (!this.events[eventName]) {
+            console.log('不存在......');
+        }
+        this.events[eventName] && this.events[eventName].forEach(fn => {
+            fn.call(this, ...rest);
+        });
+    }
+    remove(eventName) {
+        delete this.events[eventName];
+    }
+    once(eventName, callback) {
+        const fn = function () {
+            callback.call(this);
+            this.remove(eventName);
+        }
+        this.on(eventName, fn);
+    }
+}
+
+const e1 = new Emittter('lixx', 27);
+e1.on('sayHello', function () {
+    console.log(`hello ${this.name}`);
+});
+e1.on('sayHello', function () {
+    console.log(`hiiii ${this.name}`);
+});
+e1.emit('sayHello');
+const e2 = new Emittter('gyl', 27);
+e2.on('sayHello', function () {
+    console.log(`hello ${this.name}`);
+});
+e2.on('sayHello', function () {
+    console.log(`hiiii ${this.name}`);
+});
+e2.once('sayHIIIII', function () {
+    console.log(`sayHIIIII ${this.name}  ${this.age}`);
+});
+e2.emit('sayHello');
+e2.emit('sayHIIIII');
+e2.emit('sayHIIIII');

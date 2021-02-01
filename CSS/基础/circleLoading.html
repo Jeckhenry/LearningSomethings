@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ff5100;
+        }
+
+        .bot {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            background: cadetblue;
+            border-radius: 50%;
+            z-index: 5;
+            left: 10px;
+            top: 10px;
+        }
+
+        .bot1 {
+            width: 50px;
+            height: 100px;
+            top: 0;
+            left: 0;
+            position: absolute;
+            z-index: 3;
+            background: darkgoldenrod;
+            border-radius: 100px 0 0 100px;
+        }
+
+        .l1 {
+            width: 50px;
+            height: 100px;
+            top: 0;
+            left: 0;
+            position: absolute;
+            z-index: 2;
+            background: darkorchid;
+            border-radius: 100px 0 0 100px;
+            transform-origin: 50px 50px;
+            animation: l1A 5s linear forwards;
+        }
+
+        .bot2 {
+            width: 50px;
+            height: 100px;
+            top: 0;
+            left: 50px;
+            position: absolute;
+            z-index: 1;
+            background: darkgoldenrod;
+            border-radius: 0 100px 100px 0;
+        }
+
+        .l2 {
+            top: 0;
+            left: 50px;
+            position: absolute;
+            z-index: 4;
+            background: darkorchid;
+            border-radius: 0 100px 100px 0;
+            transform-origin: 0 50px;
+            transform: rotate(-180deg);
+            animation: l2A 5s linear forwards;
+        }
+
+        @keyframes l1A {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(180deg);
+            }
+
+            100% {
+                transform: rotate(180deg);
+            }
+        }
+
+        @keyframes l2A {
+            0% {
+                transform: rotate(-180deg);
+            }
+
+            100% {
+                width: 50px;
+                height: 100px;
+                transform: rotate(180deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="bot"></div>
+        <div class="bot1"></div>
+        <div class="bot2"></div>
+        <div class="l2"></div>
+        <div class="l1"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        div {
+            height: 400px;
+            width: 2000px;
+        }
+
+        .box1 {
+            background: red;
+        }
+
+        .box2 {
+            background: green;
+        }
+
+        .box3 {
+            background: yellow;
+        }
+
+        .box4 {
+            background: blue;
+        }
+
+        .box5 {
+            background: pink;
+            border: 1px solid red;
+            padding: 20px;
+            margin: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+    <div class="box4"></div>
+    <div style=''>
+        <div class="box5" style=''></div>
+    </div>
+
+    <script>
+        const box5 = document.querySelector('.box5');
+        const boxParent = document.documentElement;
+        console.log(box5.offsetWidth, box5.offsetHeight);
+        const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+        window.onscroll = function () {
+            const {
+                top,
+                left,
+                bottom,
+                right
+            } = box5.getBoundingClientRect();
+            console.log(
+                bottom);
+            console.log(box5.getClientRects()[0]);
+            // console.log(top, left);
+            // console.log(document.documentElement.scrollHeight);
+            // console.log(document.documentElement.scrollWidth);
+            // if (box5.getBoundingClientRect().top < clientHeight) {
+            //     console.log('进入可视区域');
+            // } else {
+            //     console.log('滑出可视区域');
+            // }
+            // console.log('scrollHeight', boxParent.scrollHeight);
+            // console.log('offsetHeight', boxParent.offsetHeight);
+            // console.log('box5.offsetWidth', box5.offsetWidth);
+            // console.log('box5.offsetHeight', box5.offsetHeight);
+            // console.log('box5.clientWidth', box5.clientWidth);
+            // console.log('box5.clientHeight', box5.clientHeight);
+            // console.log('box5.offsetParent', box5.offsetParent);
+            // console.log('box5.getBoundingClientRect', box5.getBoundingClientRect());
+            // console.log('box5.getClientRects', box5.getClientRects());
+        }
+    </script>
+</body>
+
+</html>
