@@ -71,3 +71,7 @@
             document.body.removeChild(vm.$el);
             vm.$destroy();
         }
+
+10、$router是VueRouter的实例对象
+    $route是$router中hashHistory的current属性
+    访问query等也可以使用this.$router.hashHistory.current
