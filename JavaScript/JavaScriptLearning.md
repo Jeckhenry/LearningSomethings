@@ -143,3 +143,52 @@ interval(func, wait){
     该方法没有普遍支持：
     toSource() 方法表示对象的源代码。
 
+6、类数组对象转化为数组
+
+    1）Array.prototype.slice.call(obj)
+
+    2）Array.prototype.concat([], obj)
+    
+    3）Array.from(obj)
+
+    4）[...obj]
+
+7、数组扁平化： var arr = [1, [2, [3, [4, 5]]]];
+
+    1）
+        for (let i = 0; i < arr.length; i += 1) {
+            if (Array.isArray(arr[i])) {
+                arr = [...arr.slice(0, i), ...arr[i], ...arr.slice(i + 1)];
+                i--;
+            }
+        }
+
+    2）
+    function flatten(arr) {
+        return arr.reduce((prev, after) => {
+            return prev.concat(Array.isArray(after) ? flatten(after) : after);
+        }, []);
+    }
+
+    3）
+    while (arr.some((item) => Array.isArray(item))) {
+        arr = [].concat(...arr)
+    }
+
+    4）
+    arr.toString().split(',')
+
+    5）
+    arr.flat(depth)
+
+    6）
+    let arr = [1, [2, [3, [4, 5]]], 6];
+    function flatten(arr) {
+        let str = JSON.stringify(arr);
+        str = str.replace(/(\[|\])/g, '');
+        str = '[' + str + ']';
+        return JSON.parse(str); 
+    }
+    console.log(flatten(arr)); 
+
+

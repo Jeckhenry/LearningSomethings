@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='div1'>
+        <p id='pp1'>1123</p>
+        <p id='pp2'>1123</p>
+        <p id='pp3'>1123</p>
+        <p id='pp4'>1123</p>
+        <p id='pp5'>
+            <a href="">跳转</a>
+            <a href="">跳转</a>
+            <div>
+                <p><a href=""></a></p>
+            </div>
+        </p>
+        <section></section>
+    </div>
+    <header id='header1'>
+        <p></p>
+    </header>
+    <img src="" alt="">
+    <ul id='ul1'>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <hr />
+    <footer id='footer1'>
+        <div>13123</div>
+    </footer>
+
+    <script>
+        const getAllNodesType = function () {
+            let map = new Map();
+            const bodyEl = document.querySelector('body');
+            const getNodeName = function (parent) {
+                const childs = parent ? parent.childNodes : [];
+                Array.from(childs).forEach((child) => {
+                    const nodeName = child.nodeName.toLocaleLowerCase();
+                    if (!map.has(nodeName)) {
+                        map.set(nodeName, 1);
+                    } else {
+                        map.set(nodeName, map.get(nodeName) + 1);
+                    }
+                    if (child.childNodes.length > 0) {
+                        getNodeName(child);
+                    }
+                });
+            }
+            getNodeName(bodyEl);
+            return map;
+        }
+        console.log(getAllNodesType());
+
+        const getNodeObject = function () {
+            let obj = {};
+            const bodyEl = document.querySelector('body');
+            const getChildNode = function (parent, res, idx) {
+                const childNodes = parent ? parent.childNodes : [];
+                if (parent.nodeType === 3 || parent.nodeName === 'SCRIPT') {
+                    return;
+                }
+                // console.log(parent.getAttribute('id'));
+                console.log(typeof parent);
+                console.log(Object.prototype.toString.call(parent));
+                const nn = parent.nodeName.toLocaleLowerCase();
+                res[nn + idx] = {
+                    nodeName: nn,
+                    childs: [],
+                };
+                const tmp = res[nn + idx];
+                const cc = Array.from(childNodes);
+                for (let i = 0; i < cc.length; i += 1) {
+                    const c = cc[i];
+                    if (c.nodeType === 3 || c.nodeName === 'SCRIPT') {
+                        continue;
+                    }
+                    tmp.childs.push({});
+                    const len = tmp.childs.length - 1;
+                    getChildNode(c, tmp.childs[len], len);
+                }
+            }
+            getChildNode(bodyEl, obj, 0);
+            return obj;
+        }
+        console.log(getNodeObject());
+    </script>
+
+</body>
+
+</html>
