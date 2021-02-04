@@ -83,6 +83,7 @@ interval(func, wait){
 ```
 
 4、var    let   const的区别
+
     1）var声明的变量会挂载在window上，而let和const不会
     2）var存在变量提升，而let和const不会
     3）let和const会形成块级作用域 ‘{}’
@@ -90,35 +91,50 @@ interval(func, wait){
     5）const声明必须赋值，不能用null占位；声明后不能修改，除非声明的复合数据类型，可以修改属性值
 
 5、Array.of：将参数当作数组元素，返回一个新的数组，参数一个时返回含有一个元素的数组
+
    Array：构造器当参数为一个时，返回指定长度的空数组
 
    判断数组的方法：var a = []
+
    1）a instanceof Array
+
    2）a.constructor === Array
+
    3）Array.prototype.isPrototypeOf(a) // Object.prototype.isPrototypeOf
+
    4）Object.getPrototypeof(a) === Array.prototype
+
    5）Object.toString.call(a) === '[object Array]'
 
    6）Array.isArray
 
+```
    if (!Array.isArray) {
        Array.isArray = function(arg) {
            return Object.toString.call(arg) === '[object Array]';
        }
    }
+```
 
    部分方法介绍:
+   
    1）shift：删除头部元素，返回删除后的元素
+
    2）unshift：向头部追加元素，返回追加后数组长度
+   
    3）copyWithin：复制部分元素，(target, start, end)，
    复制开始的位置、被复制开始的位置、被复制结束的位置
+
    4）fill：填充元素，(ele, start, end)被填充元素，开始位置，停止填充的位置
-   4）includes：该方法会忽略+0和-0，
+
+   5）includes：该方法会忽略+0和-0，
         var a = [-0, 1, 2]
         a.includes(+0) // true
 
-   5）reduce/reduceRight
-   6）entries：
+   6）reduce/reduceRight
+
+   7）entries：
+
        var a = ['a', 'b', 'c']
        var b = a.entries();
        // console.log(b.next()) // {value: __, done: false}
@@ -127,14 +143,19 @@ interval(func, wait){
        console.log(b.next().value);//[0, 'c']
        console.log(b.next().value);//undefined
 
-   7）find：返回满足条件的第一个值
-   8）findIndex：返回满足条件的第一个值的索引
-   9）// values方法
+   8）find：返回满足条件的第一个值
+
+   9）findIndex：返回满足条件的第一个值的索引
+
+   10）// values方法
+
     var array = ["abc", "xyz"];
     var iterator = array.values();
     console.log(iterator.next().value);//abc
     console.log(iterator.next().value);//xyz
-   10）// keys
+
+   11）// keys
+   
     var array = ["abc", "xyz"];
     var iterator = array.keys();
     console.log(iterator.next().value);//0
