@@ -217,6 +217,7 @@ enum Color { Red, Yellow, Green };
 let apple: Fruit = Fruit.Apple;
 let banana: string = Fruit[0];
 console.log(apple, '===');
+
 console.log(banana, '===', Fruit[1]);
 
 enum Type { JavaScript = 'JavaScript', Java = 'java' }

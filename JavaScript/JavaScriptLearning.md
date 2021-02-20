@@ -213,3 +213,7 @@ interval(func, wait){
     console.log(flatten(arr)); 
 
 
+8、数组排序方法；
+
+
+![Alt text](./image/sortImg.png "optional title")

@@ -305,3 +305,14 @@ var OO;
 })(OO || (OO = {}));
 console.log(OO[0], OO.bb);
 console.log(OO[1], OO.aa);
+var d = {
+    name: '',
+    age: 10
+};
+// let kk: Plll = {}
+var KK = /** @class */ (function () {
+    function KK(name) {
+        this.name = name;
+    }
+    return KK;
+}());
