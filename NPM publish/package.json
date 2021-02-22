@@ -1,0 +1,11 @@
+{
+  "name": "lxxnpm",
+  "version": "0.0.1",
+  "description": "my publish npm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lxx",
+  "license": "ISC"
+}
