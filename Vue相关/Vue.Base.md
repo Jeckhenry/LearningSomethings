@@ -108,3 +108,10 @@
         proxy
     模板引擎：提供描述视图的模板语法
     渲染：如何将模板渲染为html
+
+7、Vue中的异步更新
+    只要监听到数据变化，Vue就开启一个队列，并缓冲在同一事件中的所有数据变更；
+    如果同一个watcher被触发多次，只会被推入到队列中一次，避免了不必要的计算和DOM操作，然后在
+    下一个的事件循环tick中，Vue刷新队列，执行实际的工作。
+    Vue在内部对异步队列使用原生的Promise.then、MutationObserver和setImmediate，如果都不支持，就使用
+    settimeout代替。
