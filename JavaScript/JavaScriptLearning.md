@@ -217,3 +217,19 @@ interval(func, wait){
 
 
 ![Alt text](./image/sortImg.png "optional title")
+
+9、标签函数
+    ```
+    标签函数的第一个参数包含一个字符串值的数组。其余的参数与表达式相关。最后，你的函数可以返回处理好的的字符串（或者它可以返回完全不同的东西，全看标签函数的处理）。用于该标签的函数的名称可以被命名为任何名字。
+
+    function Tag(strings, personExp，ageExp,...)
+    //strings:字符串数组，这个其实就是以${}分分隔符分割得到的数组
+    //personExp：模板字符串中第一个${}的值
+    //ageExp：模板字符串中第二个${}的值
+    //...：模板字符串中第n个${}的值
+
+    console.log `aaa${1}bbb`
+    //['aaa','bbb'] 1
+    console.log `aaa${1}b${2}bb`
+    //['aaa','b','bb'] 1 2
+    ```
