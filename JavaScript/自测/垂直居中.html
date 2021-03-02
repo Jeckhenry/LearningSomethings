@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .dd {
+            width: 400px;
+            height: 400px;
+            border: 1px solid red;
+        }
+
+        img {
+            width: 50%;
+        }
+
+        .vertical {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .fleximg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .absoluteimg {
+            position: relative;
+        }
+
+        .absoluteimg img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vertical dd">
+        <img src="../image/sortImg.png" alt="">
+    </div>
+
+    <div class="fleximg dd">
+        <img src="../image/sortImg.png" alt="">
+    </div>
+
+    <div class="absoluteimg dd">
+        <img src="../image/sortImg.png" alt="">
+    </div>
+</body>
+
+</html>

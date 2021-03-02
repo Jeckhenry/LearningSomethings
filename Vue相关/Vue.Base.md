@@ -115,3 +115,38 @@
     下一个的事件循环tick中，Vue刷新队列，执行实际的工作。
     Vue在内部对异步队列使用原生的Promise.then、MutationObserver和setImmediate，如果都不支持，就使用
     settimeout代替。
+
+8、Vue Mixin
+
+    权重依次减少：
+    组件选项 > 组件的mixin > 组件的mixin的mxin > 全局选项
+    
+    组件实例化之前需要先将全局选项和组件选项合并起来。
+
+    1）函数叠加（data，provide）
+        会将多个函数添加到一个新的函数中，并返回新函数，函数执行时会执行两个方法，如果有数据重复，权重大的优先。
+    2）数组叠加（生命周期函数、watch）
+        权重大的放后面，执行时先执行权重小的。
+    3）原型叠加（components，filters，directives）
+        两个对象合并的时候不会覆盖，权重小的，会被放到权重大的原型上。
+    4）覆盖叠加（props，methods，computed，inject）
+        两个对象合并，如果有重复，权重大的覆盖权重小的。
+    5）直接替换（template，el，propsData）
+
+9、Vue Directive
+```
+Vue.directive(name, {});
+
+directives: {
+    name: {
+
+    }
+}
+
+自定义指令中可以使用的几个钩子:
+bind：只调用一次，指令第一次绑定到元素时调用，可以进行一次性初始化设置
+inserted：被绑定元素插入父节点时调用（仅保证父节点存在，不保证插入到文档中）
+update：被绑定元素变化时更新（子组件可能还未更新）
+componentUpdated：组件和子组件更新时触发
+unbind：指令被移除时触发
+```

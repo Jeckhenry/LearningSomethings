@@ -300,7 +300,7 @@ interface B {
     a: string
 }
 let t: A & B;// a将会是一个never类型，应避免这种使用
-type C = A & B;
+type C = A & B;// a将会是一个never类型，应避免这种使用
 interface T extends A {
 
 }
