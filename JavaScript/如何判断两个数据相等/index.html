@@ -68,7 +68,46 @@
         // console.log(loopEqual(+0, -0));
         // console.log(loopEqual(-0, +0));
         // console.log(loopEqual(new Date('2020-10-20'), new Date('2020-10-20')));
-        console.log(loopEqual(/\s+/, /\s+/));
+        // console.log(loopEqual(/\s+/, /\s+/));
+        // console.log(Object.is(+0, -0));
+        if (!Object.is) {
+            Object.is = function (a, b) {
+                if (a === b) {
+                    return a !== 0 || 1 / a === 1 / b;
+                } else {
+                    return x !== x && y !== y;
+                }
+            }
+        }
+
+        var longestPalindrome = function (s) {
+            if (s.length <= 1) return s;
+            const len = s.length;
+            let res = '';
+            let dp = [];
+            for (let i = 0; i < len; i += 1) {
+                let t = new Array(len).fill(false);
+                dp.push(t);
+            }
+            for (let l = 0; l < len; l += 1) {
+                for (let i = 0; i < len; i += 1) {
+                    let e = i + l;
+                    if (l === 0) {
+                        dp[i][e] = true;
+                    } else if (l === 1) {
+                        console.log(i, e);
+                        dp[i][e] = (s.charAt(i) === s.charAt(e));
+                    } else {
+                        dp[i][e] = (s.charAt(i) === s.charAt(e)) && dp[i + 1][e - 1];
+                    }
+                    if (dp[i][e] && l + 1 > res.length) {
+                        res = s.substr(i, l + 1);
+                    }
+                }
+            }
+            return res;
+        };
+        console.log(longestPalindrome("babad"));
     </script>
 </body>
 

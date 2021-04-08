@@ -10,7 +10,7 @@ function getName() {
     console.log([...arguments]);
     return this.name;
 }
-// console.log('直接调用', getName());;
+console.log('直接调用', getName());
 // apply:接收参数为数组
 Function.prototype.selfApply = function (context) {
     context = context ? Object.create(context) : {};

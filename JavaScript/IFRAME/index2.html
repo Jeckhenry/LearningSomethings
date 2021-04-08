@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDEX2</title>
+    <style>
+        .red {
+            color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">index2</div>
+    <script>
+        window.onload = function () {
+            const parent = window.parent;
+            const self = window.self;
+            console.log(parent.document, '----');
+            console.log(self.document, '----');
+        }
+    </script>
+</body>
+
+</html>

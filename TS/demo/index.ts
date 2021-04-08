@@ -425,3 +425,26 @@ class KK implements LOO {
 
 type myString = string
 
+type PartialReturnType<T extends (...args: string[]) => unknown> = Partial<ReturnType<T>>
+function fool() { return 1 };
+type df = (a: unknown, b: unknown) => any;
+type FooType = PartialReturnType<df>;
+type olp = Partial<any>;
+
+type Parametersa<T> = T extends (...args: unknown[]) => any ? string[] : any;
+type T0 = Parametersa<() => string>;
+type T11 = Parametersa<(s: number) => any>;
+type T21 = Parametersa<(<T>(arg: T) => T)>;
+
+type Po0<T> = T extends unknown[] ? true : false;
+type po1 = Po0<[string, number]>;
+
+type Pk = () => string;
+type Pklo = keyof Pk;
+
+interface PPPP {
+    a: string;
+}
+let alll: unknown = { a: 1 };
+// console.log(alll.a);
+// console.log((alll as PPPP).a);

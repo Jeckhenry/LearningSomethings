@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 全排列
+        // [1,2,3]
+        const allMutation = function (arr) {
+            if (arr.length <= 1) return [];
+            let res = [],
+                len = arr.length;
+            const mutation = function (arr) {
+                if (arr.length <= 1) return [arr];
+                let tmp = [];
+                for (let i = 0; i < arr.length; i += 1) {
+                    const d = arr[i];
+                    const other = [].concat(arr.slice(0, i), arr.slice(i + 1));
+                    const otherMutation = mutation(other);
+                    otherMutation.forEach(m => {
+                        tmp.push([d, ...Array.prototype.flat.call(m, Infinity)]);
+                    })
+                }
+                tmp[0].length === len && (res = tmp);
+                return tmp;
+            }
+            mutation(arr);
+            return res;
+        }
+        console.log(allMutation([1, 2, 3, 4]));
+    </script>
+</body>
+
+</html>

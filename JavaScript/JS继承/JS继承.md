@@ -146,6 +146,9 @@ function Parent(name) {
     this.name = name;
     this.play = [1, 2, 3];
 }
+Parent.how = function() { // 父类的实例方法
+    console.log('howing....');
+}
 Parent.prototype.song = function () {
     console.log('sing...');
 }
@@ -154,7 +157,8 @@ Parent.prototype.jjl = [456];
 
 function clone(parent, child) {
     child.prototype = Object.create(parent.prototype);
-    child.prototype.constructor = child;
+    child.prototype.constructor = child; 
+    // 例如子类上有创建自身的方法时需要重新把构造函数指回子类；如果需要访问父类的实例方法和属性也不需要更改指向
 }
 
 function Child(name, type = 'child1') {

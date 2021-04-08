@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+            run() {
+                console.log(`${this.name}会跑`);
+            }
+        }
+
+        class People extends Animal {
+            constructor(name) {
+                super(name);
+            }
+            sing() {
+                console.log(`${this.name}会唱歌`);
+            }
+        }
+
+        class Man {
+            constructor(name) {
+                // super(name);
+                // return {
+                //     sex: 'as'
+                // }
+            }
+            think() {
+                console.log(`${this.name}会思考`);
+            }
+        }
+        const xiaoming = new Man('xiaoming');
+        // console.log(xiaoming.__proto__.__proto__.__proto__.__proto__);
+        // xiaoming.run();
+        console.log(xiaoming.think());
+    </script>
+</body>
+
+</html>

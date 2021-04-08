@@ -233,3 +233,86 @@ interval(func, wait){
     console.log `aaa${1}b${2}bb`
     //['aaa','b','bb'] 1 2
     ```
+
+10、请你简要介绍一下JS中==、===以及Object.is()的区别是什么
+```
+==：会发生隐式类型转换，然后比较值
+===：会先比较类型，再比较值
+Object.is：类似与===
+以下情况，Object.is会判断两个值相等：
+    两个值都是 undefined
+    两个值都是 null
+    两个值都是 true 或者都是 false
+    两个值是由相同个数的字符按照相同的顺序组成的字符串
+    两个值指向同一个对象
+    两个值都是数字并且
+    都是正零 +0
+    都是负零 -0
+    都是 NaN
+    都是除零和 NaN 外的其它同一个数字
+
+if (!Object.is) {
+    Object.is = function() {
+        if (x === y) {
+            // +0 != -0
+            return x != 0 || 1 / x === 1 / y;
+        } else {
+            // NaN == NaN
+            return x != x && y != y;
+        }
+    }
+}
+```
+
+11、请你讲一下异步加载js的方法有哪几种，它们的适用条件分别是什么？
+```
+1. 给script标签添加async或defer属性
+2. js构造script标签在需要时加载
+3. ajax获取js内容，构造script标签或直接eval
+```
+
+12、iframe是什么？有什么缺点？
+```
+iframe也称作嵌入式框架，嵌入式框架和框架网页类似，它可以把一个网页的框架和内容嵌入在现有的网页中。
+
+缺点：
+iframe会阻塞主页面的onload事件，通过 JavaScript 动态设置 iframe的SRC可以避免这种阻塞情况。；
+
+iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载。，会产生很多页面，不容易管理。
+
+iframe框架结构有时会让人感到迷惑，如果框架个数多的话，可能会出现上下、左右滚动条，会分散访问者的注意力，用户体验度差。
+
+代码复杂，无法被一些搜索引擎索引到，这一点很关键，现在的搜索引擎爬虫还不能很好的处理iframe中的内容，所以使用iframe会不利于搜索引擎优化（SEO）。
+
+很多的移动设备无法完全显示框架，设备兼容性差。
+iframe框架页面会增加服务器的http请求，对于大型网站是不可取的。
+```
+
+13、请你简要描述一下Ajax中是如何解决浏览器缓存问题的
+```
+1）添加请求头if-modified-since:0
+2）添加请求头cache: no-cache
+3）在URL后添加随机数或时间戳
+```
+
+14、defer 与 async 的区别如下:
+
+相同点: 「异步加载 (fetch)」
+
+不同点: 「async 加载(fetch)完成后立即执行 (execution)，defer 加载完成后延迟到 DOM 解析完成后(DOMContentLoaded之前)才会执行」
+
+async可能在DOMContentLoaded之前或者之后加载并执行；defer在DOMContentLoaded之前执行。
+
+15、requestAnimationFrame 执行动画，最大优势是能保证回调函数在屏幕每一次刷新间隔中只被执行一次，这样就不会引起丢帧，动画也就不会卡顿
+
+16、typeof
+    instanceof
+    Object.prototype.toString.call()
+
+17、Promise.all：全都resolve后返回结果，有一个reject就整个reject
+    Promise.race：返回最快resolve的结果，有一个reject就整个reject
+    Promise.allSettled：返回所有结果，包含resolve和reject
+
+18、null作为一个基本数据类型为什么会被typeof运算符识别为object类型呢？
+
+    这个bug是第一版Javascript留下来的，javascript中不同对象在底层都表示为二进制，而javascript 中会把二进制前三位都为0的判断为object类型，而null的二进制表示全都是0，自然前三位也是0，所以执行typeof时会返回 ‘object’。

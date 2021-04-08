@@ -316,3 +316,8 @@ var KK = /** @class */ (function () {
     }
     return KK;
 }());
+function fool() { return 1; }
+;
+var alll = { a: 1 };
+// console.log(alll.a);
+// console.log((alll as PPPP).a);

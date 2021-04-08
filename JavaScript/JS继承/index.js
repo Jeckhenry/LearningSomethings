@@ -191,66 +191,116 @@ console.log('child2', child2.jjl); // [456, 234]
 // console.log(child.getName());
 // child.song();
 
-function Parent() {
-    this.name = 'lixx';
-}
-Parent.prototype.age = 123;
-Parent.prototype.song = function () {
-    console.log('sing...');
-}
+// function Parent() {
+//     this.name = 'lixx';
+// }
+// Parent.prototype.age = 123;
+// Parent.prototype.song = function () {
+//     console.log('sing...');
+// }
 
-function Child() {
-    this.type = 'child';
-}
-Child.prototype = new Parent;
-let c1 = new Child;
-Parent.prototype.dance = function () {
-    console.log('dancing...');
-}
-// console.log(c1.name, c1.age);
-// c1.song();
-// c1.dance();
-// console.log(c1.__proto__);
+// function Child() {
+//     this.type = 'child';
+// }
+// Child.prototype = new Parent;
+// let c1 = new Child;
+// Parent.prototype.dance = function () {
+//     console.log('dancing...');
+// }
+// // console.log(c1.name, c1.age);
+// // c1.song();
+// // c1.dance();
+// // console.log(c1.__proto__);
 
-function Child1() {
-    Parent.call(this);
-    this.type = 'child';
-}
-let c2 = new Child1;
+// function Child1() {
+//     Parent.call(this);
+//     this.type = 'child';
+// }
+// let c2 = new Child1;
 // console.log(c2.name);
 // console.log(c2.__proto__);
 
-function Child2() {
-    Parent.call(this);
-    this.type = 'child';
+// function Child2() {
+//     Parent.call(this);
+//     this.type = 'child';
+// }
+// Child2.prototype = new Parent;
+// Child2.prototype.constructor = Child2;
+// let c3 = new Child2;
+// // console.log(c3);
+// // c3.song();
+// // c3.dance();
+
+
+// let p1 = {
+//     name: 'lixx',
+//     hobiees: [1, 2, 3],
+//     getName() {
+//         return this.name;
+//     },
+// };
+// let c4 = Object.create(p1);
+// // console.log(c4.getName());
+
+// function clone(oriObj) {
+//     let clone = Object.create(oriObj);
+//     clone.getHobiees = function () {
+//         return this.hobiees;
+//     }
+//     return clone;
+// }
+// let c5 = clone(p1, p1);
+// console.log(c5.getHobiees());
+
+// const dd = null
+// console.log(dd);
+
+function Parent(name) {
+    this.name = name;
 }
-Child2.prototype = new Parent;
-Child2.prototype.constructor = Child2;
-let c3 = new Child2;
-// console.log(c3);
-// c3.song();
-// c3.dance();
-
-
-let p1 = {
-    name: 'lixx',
-    hobiees: [1, 2, 3],
-    getName() {
-        return this.name;
-    },
-};
-let c4 = Object.create(p1);
-// console.log(c4.getName());
-
-function clone(oriObj) {
-    let clone = Object.create(oriObj);
-    clone.getHobiees = function () {
-        return this.hobiees;
-    }
-    return clone;
+Parent.how = function () {
+    console.log('parent howing.....');
 }
-let c5 = clone(p1, p1);
-console.log(c5.getHobiees());
+Parent.prototype.sing = function () {
+    console.log(`${this.name} is singing.....`);
+}
 
-const dd = null
-console.log(dd);
+function Child(name, sex) {
+    Parent.call(this, name);
+    this.sex = sex;
+}
+Child.prototype = Object.create(Parent.prototype);
+// Child.prototype.constructor = Child;
+Child.prototype.dance = function () {
+    console.log(`${this.name} is dancing`);
+    console.log(this.constructor.how, '******');
+}
+// 子类上有创建自身的方法
+Child.prototype.create = function () {
+    return new this.constructor();
+}
+
+const myChild = new Child('lxx', 'male');
+// console.log(Object.getPrototypeOf(myChild));
+console.log(myChild);
+// console.log(Child);
+// myChild.dance();
+// // myChild.sing();
+// console.log(myChild.create().create());
+
+// const child2 = new Child('lxx', 'male');
+// console.log(child2);
+function selfNew() {
+    // const obj = Object.create(p.prototype);
+    // let res = p.call(obj, ...[].slice.call(arguments, 1));
+    // return res instanceof Object ? res : obj;
+    const Con = [].shift.call(arguments);
+    const obj = Object.create(Con.prototype);
+    let ret = Con.apply(obj, arguments);
+    return ret instanceof Object ? ret : obj;
+}
+const myChild2 = selfNew(Child, 'gyl', 'female');
+console.log(myChild2, '***0000----');
+
+// const myChild3 = Child('aa', 'll');
+// console.log(name, sex);
