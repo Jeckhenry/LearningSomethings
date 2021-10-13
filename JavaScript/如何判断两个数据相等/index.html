@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function getType(obj) {
+            return Object.prototype.toString.call(obj).replace(/^\[object (\S+)]$/, '$1');
+        }
+
+        function loopEqual(a, b) {
+            // +0 === -0 true,应当不等
+            // 1/ 0=Infinity   1/-0 = -Infinity
+            if (a === b) return a !== 0 || 1 / a === 1 / b;
+            // null == undefined true,应当不等
+            if (a == null || b == null) return false;
+            // NaN === NaN false，应当相等
+            if (a !== a) return b !== b;
+
+            let aType = getType(a);
+            let bType = getType(b);
+            if (aType !== bType) return false;
+            switch (aType) {
+                case 'Number':
+                case 'Boolean':
+                    return +a === +b;
+                case 'String':
+                    return a === b;
+                case 'Array':
+                    if (a.length !== b.length) return false;
+                    for (let i in a) {
+                        let flag = false;
+                        for (let j in b) {
+                            if (loopEqual(a[i], a[j])) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (!flag) return false;
+                    }
+                    return true;
+                case 'Object':
+                    let aKeys = Object.keys(a);
+                    let bKeys = Object.keys(b);
+                    if (aKeys.length !== bKeys.length) return false;
+                    for (let i in aKeys) {
+                        let flag = false;
+                        for (let j in bKeys) {
+                            if (loopEqual(a[i], a[j])) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (!flag) return false;
+                    }
+                    return true;
+                case "Date":
+                    return a.getTime() === b.getTime();
+                case 'RegExp':
+                    return a + '' === b + '';
+            }
+        }
+        // console.log(loopEqual(+0, -0));
+        // console.log(loopEqual(-0, +0));
+        // console.log(loopEqual(new Date('2020-10-20'), new Date('2020-10-20')));
+        // console.log(loopEqual(/\s+/, /\s+/));
+        // console.log(Object.is(+0, -0));
+        if (!Object.is) {
+            Object.is = function (a, b) {
+                if (a === b) {
+                    return a !== 0 || 1 / a === 1 / b;
+                } else {
+                    return x !== x && y !== y;
+                }
+            }
+        }
+
+        var longestPalindrome = function (s) {
+            if (s.length <= 1) return s;
+            const len = s.length;
+            let res = '';
+            let dp = [];
+            for (let i = 0; i < len; i += 1) {
+                let t = new Array(len).fill(false);
+                dp.push(t);
+            }
+            for (let l = 0; l < len; l += 1) {
+                for (let i = 0; i < len; i += 1) {
+                    let e = i + l;
+                    if (l === 0) {
+                        dp[i][e] = true;
+                    } else if (l === 1) {
+                        console.log(i, e);
+                        dp[i][e] = (s.charAt(i) === s.charAt(e));
+                    } else {
+                        dp[i][e] = (s.charAt(i) === s.charAt(e)) && dp[i + 1][e - 1];
+                    }
+                    if (dp[i][e] && l + 1 > res.length) {
+                        res = s.substr(i, l + 1);
+                    }
+                }
+            }
+            return res;
+        };
+        console.log(longestPalindrome("babad"));
+    </script>
+</body>
+
+</html>

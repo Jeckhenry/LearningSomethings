@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const tree = [{
+            id: 1,
+            name: 'fu1',
+            children: [{
+                id: 2,
+                name: 'zi21',
+                children: [{
+                    id: 3,
+                    name: 'zi31'
+                }],
+            }, {
+                id: 4,
+                name: 'zi41',
+                children: [{
+                    id: 5,
+                    name: 'zi51'
+                }, {
+                    id: 6,
+                    name: 'zi61'
+                }],
+            }],
+        }, {
+            id: 7,
+            name: 'fu7',
+            children: [{
+                id: 8,
+                name: 'zi81',
+                children: [{
+                    id: 9,
+                    name: 'zi91'
+                }],
+            }, {
+                id: 10,
+                name: 'zi101',
+                children: [{
+                    id: 11,
+                    name: 'zi111'
+                }, {
+                    id: 12,
+                    name: 'zi121',
+                    children: [{
+                        id: 13,
+                        name: 'zi131'
+                    }, {
+                        id: 14,
+                        name: 'zi141'
+                    }],
+                }],
+            }],
+        }];
+
+        const findObj = function (id, arr) {
+            if (arr === undefined || arr.length === 0) return;
+            let res = {};
+            for (let i = 0; i < arr.length; i += 1) {
+                if (arr[i].id === id) {
+                    res = arr[i];
+                    break;
+                } else {
+                    res = findObj(id, arr[i].children);
+                }
+            }
+            return res;
+        }
+        console.log(findObj(11, tree));
+    </script>
+</body>
+
+</html>

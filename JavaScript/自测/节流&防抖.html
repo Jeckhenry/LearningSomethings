@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <p>节流</p>
+        <input type="text" id='throttleEl'>
+    </div>
+    <div>
+        <p>防抖</p>
+        <input type="text" id='debounceEl' v-bind='lxx'>
+    </div>
+    <script>
+        function print(event) {
+            console.log(event.target.attributes);
+        }
+        // 防抖：规定时间内会触发多次，但是只有最后一次有效
+        const debounce = function (fn, wait) {
+            let timer = null;
+            return function (event) {
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(function () {
+                    fn(event);
+                }, wait);
+            }
+        }
+        const debounceFunc = debounce(print, 200);
+        throttleEl.addEventListener('input', function (event) {
+            debounceFunc(event);
+        });
+        // 节流：规定时间内只触发一次，触发后重新开始计算时间
+        const throttle = function (fn, wait) {
+            let preDate = +new Date();
+            return function (event) {
+                let nowDate = +new Date();
+                if (nowDate - preDate > wait) {
+                    preDate = +new Date();
+                    fn(event);
+                }
+            }
+        }
+        const throttleFunc = throttle(print, 2000);
+        debounceEl.addEventListener('input', function (event) {
+            throttleFunc(event);
+        });
+    </script>
+</body>
+
+</html>

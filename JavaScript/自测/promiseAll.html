@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let time1 = function () {
+            return new Promise((res, re) => {
+                console.log('time1 start');
+                setTimeout(() => {
+                    re('300 succes0s');
+                }, 300);
+            })
+        }
+        time1().then(res => {
+            console.log(res, 'qwe');
+        }, err => {
+            console.log(err, '=====');
+        })
+        let time2 = function () {
+            return new Promise((res, rject) => {
+                console.log('time2 start');
+                setTimeout(() => {
+                    res('200 success');
+                }, 200);
+            })
+        }
+        let time3 = function () {
+            return new Promise((res) => {
+                console.log('time3 start');
+                setTimeout(() => {
+                    res('100 success');
+                }, 100);
+            })
+        }
+        // Promise.all([time1(), time2(), time3()]).then((res) => {
+        //     console.log(res, '-------');
+        // }).catch(err => {
+        //     console.log(err, 'pppp');
+        // })
+
+        // 状态
+        const PENDING = 'pending';
+        const FULFILLED = 'fulfilled';
+        const REJECTED = 'rejected';
+
+        function MyPromise(callback) {
+            const _this = this;
+            _this.currentState = PENDING;
+            _this.value = void 0; // promise的值
+            // 用于保存 then 的回调， 只有当 promise
+            // 状态为 pending 时才会缓存，并且每个实例至多缓存一个
+            _this.onResolvedCallbacks = []; // promise resolve回调
+            _this.onRejectedCallbacks = []; // promise reject回调
+            // resolve函数
+            _this.resolve = function (value) {
+                if (value instanceof MyPromise) {
+                    // 如果value是MyPromise，递归执行
+                    return value.then(_this.resolve, _this.reject);
+                }
+                setTimeout(() => { // 异步执行，保证顺序执行
+                    if (_this.currentState === PENDING) {
+                        _this.currentState = FULFILLED;
+                        _this.value = value;
+                        _this.onResolvedCallbacks.forEach((cb) => cb());
+                    }
+                });
+            }
+            // reject函数
+            _this.reject = function (error) {
+                setTimeout(() => {
+                    if (_this.currentState === FEJECTED) {
+                        _this.currentState = FEJECTED;
+                        _this.value = error;
+                        _this.onRejectedCallbacks.forEach((cb) => cb());
+                    }
+                });
+            }
+
+            try {
+                callback(_this.resolve, _this.reject);
+            } catch (err) {
+                _this.reject(err);
+            }
+        }
+
+        MyPromise.prototype.then = function (onFulfilled, onRejected) {
+            let _this = this;
+            let promise2;
+            onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
+            onRejected = typeof onRejected === 'function' ? onRejected : err => {
+                throw err
+            };
+            if (_this.currentState === FULFILLED) {
+                return promise2 = new MyPromise(function (resolve, reject) {
+                    setTimeout(function () {
+                        try {
+                            let x = onFulfilled(_this.value);
+                            if (x instanceof MyPromise) {
+                                x.resolve(resolve, reject);
+                            }
+                            resolve(x);
+                        } catch (e) {
+                            onRejected(e);
+                        }
+                    })
+                });
+            }
+            if (_this.currentState === REJECTED) {
+                return promise2 = new MyPromise(function (resolve, reject) {
+                    setTimeout(function () {
+                        try {
+                            let x = onRejected(_this.value);
+                            if (x instanceof MyPromise) {
+                                x.resolve(resolve, reject);
+                            }
+                        } catch (e) {
+                            onRejected(e);
+                        }
+                    })
+                });
+            }
+            if (_this.currentState === PENDING) {
+                return promise2 = new MyPromise(function (resolve, reject) {
+                    _this.onResolvedCallbacks.push(function () {
+                        try {
+                            var x = onFulfilled(_this.value)
+                            if (x instanceof MyPromise) {
+                                x.then(resolve, reject)
+                            }
+                            resolve(x)
+                        } catch (e) {
+                            reject(e);
+                        }
+                    })
+                    _this.onRejectedCallbacks.push(function () {
+                        try {
+                            var x = onRejected(_this.value)
+                            if (x instanceof MyPromise) {
+                                x.then(resolve, reject)
+                            }
+                        } catch (e) {
+                            reject(e);
+                        }
+                    })
+                });
+            }
+        }
+
+        MyPromise.prototype.catch = function (onRejected) {
+            return this.then(null, onRejected);
+        }
+    </script>
+</body>
+
+</html>

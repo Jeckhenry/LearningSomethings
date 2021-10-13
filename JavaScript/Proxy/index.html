@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const obj = {
+            a: 1,
+            b: 2,
+            c: {
+                d: 3,
+                e: {
+                    f: 4
+                }
+            }
+        };
+        let nObj = new Proxy(obj, {
+            set(obj, key, val) {
+                console.log(key, val, '===');
+                obj[key] = val;
+                return obj[key];
+            },
+            get(obj, key) {
+                console.log(`${key}被获取, ${Reflect.get(obj, key)}`);
+                return obj[key];
+            }
+        });
+        // nObj.l = 123
+        nObj.l
+        // nObj.c.e.f = 1234
+        // console.log(nObj.c.e.f);
+        // nObj.a = 90
+        // console.log(nObj);
+
+        // const arr = [{
+        //     a: 1
+        // }, {
+        //     a: 2
+        // }];
+        // let nArr = new Proxy(arr, {
+        //     set(obj, prop, val) {
+        //         obj[prop] = val;
+        //         return obj[prop]
+        //     },
+        //     get(obj, prop) {
+        //         return obj[prop]
+        //     }
+        // });
+        // nArr.push({
+        //     a: 3
+        // });
+        // console.log(nArr);
+    </script>
+</body>
+
+</html>

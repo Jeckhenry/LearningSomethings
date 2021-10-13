@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let time1 = function () {
+            return new Promise((res) => {
+                console.log('time1 start');
+                setTimeout(() => {
+                    res('300 success');
+                }, 300);
+            })
+        }
+        let time2 = function () {
+            return new Promise((res, rject) => {
+                console.log('time2 start');
+                setTimeout(() => {
+                    res('200 success');
+                }, 200);
+            })
+        }
+        let time3 = function () {
+            return new Promise((res) => {
+                console.log('time3 start');
+                setTimeout(() => {
+                    res('100 success');
+                }, 100);
+            })
+        }
+        // Promise.all([time1(), time2(), time3()]).then((res) => {
+        //     console.log(res, '-------');
+        // }).catch(err => {
+        //     console.log(err, 'pppp');
+        // })
+
+        function toFetch(arr, max, callback) {
+            let fetchArr = [];
+            let i = 0;
+            let data = [];
+
+            function toThen() {
+                if (i === arr.length) {
+                    return Promise.resolve();
+                }
+                let one = arr[i++].then((res) => {
+                    const idx = fetchArr.indexOf(one);
+                    fetchArr.splice(idx, 1);
+                    data.push(res);
+                    return res;
+                }, err => {
+                    console.log('faild===', err);
+                })
+
+                fetchArr.push(one);
+                let p = Promise.resolve();
+                if (fetchArr.length >= max) {
+                    p = Promise.race(fetchArr);
+                }
+
+                return p.then(() => toThen());
+            }
+
+            toThen().then(() => Promise.all(fetchArr)).then(res => {
+                callback(res, data);
+            })
+        }
+        toFetch([time1(), time2(), time3()], 1, (a, b) => {
+            console.log(a, '=====', b);
+        });
+    </script>
+</body>
+
+</html>

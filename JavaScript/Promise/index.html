@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const p1 = new Promise((r) => {
+            setTimeout(() => {
+                r(1);
+            }, 400);
+        });
+        const p2 = new Promise((r) => {
+            setTimeout(() => {
+                r(2);
+            }, 100);
+        });
+        const p3 = new Promise((r) => {
+            setTimeout(() => {
+                r(3);
+            }, 200);
+        });
+        const p4 = new Promise((r, reject) => {
+            setTimeout(() => {
+                reject(4);
+            }, 300);
+        });
+        const pAll = Promise.all([p1, p2, p3, p4]);
+        pAll.then((res) => {
+            console.log(res);
+        }, err => {
+            console.log(err, 'err*****');
+        });
+        const pRace = Promise.race([p1, p2, p3, p4]);
+        pRace.then((r) => {
+            console.log(r, 'race****');
+        });
+        const pAllSettle = Promise.allSettled([p1, p2, p3, p4]);
+        pAllSettle.then(r => {
+            console.log(r);
+        });
+    </script>
+</body>
+
+</html>

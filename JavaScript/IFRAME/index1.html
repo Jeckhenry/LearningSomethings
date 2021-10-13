@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDEX1</title>
+</head>
+
+<body>
+    <div id="container">index1</div>
+    <iframe id='iframe' src="http://127.0.0.1:57268/index2.html" frameborder="0"></iframe>
+    <script>
+        const if2 = document.querySelector('#iframe');
+        const contentWindow = if2.contentWindow;
+        console.log(contentWindow);
+        contentWindow.onload = function () {
+            const contentDOC = if2.contentDocument;
+            console.log(contentDOC.querySelector('#container').setAttribute('class', 'red'));
+        }
+    </script>
+</body>
+
+</html>

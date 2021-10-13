@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        height: 100%;
+      }
+
+      .content {
+        display: flex;
+        height: 100%;
+        align-items: flex-end;
+        flex-direction: row;
+      }
+
+      .content > div {
+        flex: 1 1 0;
+      }
+
+      .left {
+        /* width: 200px; */
+        background: red;
+        height: 100%;
+        display: flex;
+        /* justify-content: flex-end; */
+      }
+
+      .mid {
+        /* flex: 1 1 auto; */
+        background: yellow;
+        height: 100px;
+      }
+
+      .right {
+        /* width: 200px; */
+        background: green;
+        height: 100%;
+        /* padding: 10px; */
+      }
+
+      .right p {
+        margin: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <div class="left">
+        123123123123123123123123123123123123123123123123123123123123123123123123
+        123123123123123123123123123123123123123123123123123123123123123123123123
+      </div>
+      <div class="mid">456</div>
+      <div class="right">
+        <p>123</p>
+        <div style="display: flex">
+          <p>123</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

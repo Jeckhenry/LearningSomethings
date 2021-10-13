@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='canvas' background='#ffffff' width="400" height="400" style="border: 1px solid #ccc;"></canvas>
+    <button id='button'>导出图片</button>
+    <button id='clears'>清除</button>
+    <button id='reback'>撤销上一步</button>
+    <button id='cancelback'>反撤销</button>
+    <script>
+        const canvas = document.querySelector('#canvas');
+        let beginX, beginY, downFlag = false;
+        const w = canvas.width;
+        const h = canvas.height;
+        const cL = canvas.offsetLeft,
+            cT = canvas.offsetTop;
+        const ctx = canvas.getContext('2d');
+        let cacheHistory = [],
+            garbage = [];
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, w, h);
+
+        function draw(
+            beginX,
+            beginY,
+            stopX,
+            stopY,
+        ) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#ff5100';
+            ctx.globalAlpha = 1;
+            ctx.moveTo(beginX, beginY);
+            ctx.lineTo(stopX, stopY);
+            ctx.closePath();
+            const s = ctx.stroke();
+        }
+
+
+        canvas.addEventListener('mousedown', (event) => {
+            downFlag = true;
+            event.preventDefault();
+            beginX = event.clientX - cL;
+            beginY = event.clientY - cT;
+        });
+
+        canvas.addEventListener('mousemove', (event) => {
+            event.preventDefault();
+            if (!downFlag) return;
+            let stopX = event.clientX - cL;
+            let stopY = event.clientY - cT;
+            draw(beginX, beginY, stopX, stopY);
+            beginX = stopX;
+            beginY = stopY;
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            downFlag = false;
+            cacheHistory.push(canvas.toDataURL());
+        });
+
+        button.addEventListener('click', () => {
+            let srcData = canvas.toDataURL();
+            const aEl = document.createElement('a');
+            aEl.href = srcData;
+            aEl.download = '个人签名';
+            aEl.click();
+        });
+
+        function clearDraw() {
+
+            canvas.width = w;
+            canvas.height = h;
+        }
+        clears.addEventListener('click', () => {
+            clearDraw();
+            cacheHistory = [];
+            garbage = [];
+        });
+
+        function backDraw(src) {
+            const img = new Image();
+            img.src = src;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0);
+            }
+        }
+        reback.addEventListener('click', () => {
+            clearDraw();
+            const t = cacheHistory.pop();
+            t && garbage.push(t);
+            if (cacheHistory.length === 0) return;
+            const last = cacheHistory[cacheHistory.length - 1];
+            backDraw(last);
+        });
+
+        cancelback.addEventListener('click', () => {
+            if (garbage.length === 0) return;
+            backDraw(garbage.pop());
+        });
+    </script>
+</body>
+
+</html>

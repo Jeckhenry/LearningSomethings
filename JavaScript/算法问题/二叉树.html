@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+                                    1             
+                        2                   3
+                    4            5     6          7
+                            8             9    10  11
+                                              12
+        */
+        const tree = {
+            val: 1,
+            left: {
+                val: 2,
+                left: {
+                    val: 4,
+                    left: null,
+                    right: null,
+                },
+                right: {
+                    val: 5,
+                    left: {
+                        val: 8,
+                        left: null,
+                        right: null,
+                    },
+                    right: null,
+                },
+            },
+            right: {
+                val: 3,
+                left: {
+                    val: 6,
+                    left: null,
+                    right: {
+                        val: 9,
+                        left: null,
+                        right: null,
+                    },
+                },
+                right: {
+                    val: 7,
+                    left: {
+                        val: 10,
+                        left: {
+                            val: 12,
+                            left: null,
+                            right: null,
+                        },
+                        right: null,
+                    },
+                    right: {
+                        val: 11,
+                        left: null,
+                        right: null,
+                    },
+                },
+            },
+        };
+        // 前序遍历：根-左-右
+        const prePrint = function (root) {
+            if (root === null) return;
+            let str = '';
+            const print = function (root) {
+                if (root === null) return;
+                str += root.val + ',';
+                print(root.left);
+                print(root.right);
+            }
+            print(root);
+            return str;
+        }
+        console.log('前序遍历:', prePrint(tree));
+        // 中序遍历：左-根-右
+        const midPrint = function (root) {
+            if (root === null) return;
+            let str = '';
+            const print = function (root) {
+                if (root === null) return;
+                print(root.left);
+                str += root.val + ',';
+                print(root.right);
+            }
+            print(root);
+            return str;
+        }
+        console.log('中序遍历:', midPrint(tree));
+        // 后序遍历：左-右-根
+        const backPrint = function (root) {
+            if (root === null) return;
+            let str = '';
+            const print = function (root) {
+                if (root === null) return;
+                print(root.left);
+                print(root.right);
+                str += root.val + ',';
+            }
+            print(root);
+            return str;
+        }
+        console.log('后序遍历:', backPrint(tree));
+
+        //输入一棵二叉树，判断该二叉树是否是平衡二叉树
+        // 平衡二叉树：任意一个节点的左右子数高度相差不能超过一
+        const getDepth = function (root) {
+            if (root === null) return 0;
+            const leftDepth = getDepth(root.left);
+            const rightDepth = getDepth(root.right);
+            return Math.max(leftDepth, rightDepth) + 1;
+        }
+        console.log(getDepth(tree.left));
+        // 判断平衡二叉树
+        const checkBalance = function (root) {
+            if (root === null) return false;
+            let flag = true;
+            const getNode = function (root) {
+                if (root === null || !flag) return;
+                // 左子节点高度
+                const leftHight = getDepth(root.left);
+                // 右子节点高度 
+                const rightHeight = getDepth(root.right);
+                if (Math.abs(leftHight - rightHeight) > 1) {
+                    flag = false;
+                    return false;
+                }
+                getNode(root.left);
+                getNode(root.right);
+            }
+            getNode(root);
+            return flag;
+        }
+        console.log(checkBalance(tree), '平衡二叉树');
+        // 完全二叉树
+        // 叶子节点都在最后两层，最后一层的叶子节点都靠左排列，除了最后一层，其他层的节点个数都达到最大
+        const checkComplete = function (root) {
+            if (root === null) return true;
+            let res = [];
+            const getNodes = function (arr) {
+                if (arr.length === 0) return;
+                let t = [],
+                    d = [];
+                arr.forEach(n => {
+                    t.push(n.node.val);
+                    if (n.node.left) d.push({
+                        type: 'left',
+                        node: n.node.left
+                    });
+                    if (n.node.right) d.push({
+                        type: 'right',
+                        node: n.node.right
+                    });
+                })
+                res.push(t);
+                getNodes(d);
+            }
+            getNodes([{
+                type: 'root',
+                node: root
+            }]);
+            for (let i = 0, len = res.length; i < len; i += 1) {
+                if (i < len - 1) {
+                    if (res[i].length !== Math.pow(2, i))
+                        return false;
+                } else {
+                    const right = res[i].filter(node => node.type !== 'left');
+                    if (right.length > 0) return false;
+                }
+            }
+            return true;
+        }
+        console.log(checkComplete(tree), '完全二叉树');
+
+        // 满二叉树
+        // 除叶子节点外，每个节点都有两个子节点
+        const checkAll = function (root) {
+            if (root === null) return true;
+            let res = [];
+            const getNodes = function (arr) {
+                if (arr.length === 0) return;
+                let t = [],
+                    d = [];
+                arr.forEach(n => {
+                    t.push(n.val);
+                    if (n.left) d.push(n.left);
+                    if (n.right) d.push(n.right);
+                })
+                res.push(t);
+                getNodes(d);
+            }
+            getNodes([root]);
+            for (let i = 0, len = res.length; i < len; i += 1) {
+                if (res[i].length !== Math.pow(2, i)) return false;
+            }
+            return true;
+        }
+        console.log(checkAll(tree), '===满二叉树');
+    </script>
+</body>
+
+</html>
