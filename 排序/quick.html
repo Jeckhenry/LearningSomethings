@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 快排----从小到大
+      const swap = (arr, i, j) => {
+        ;[arr[i], arr[j]] = [arr[j], arr[i]]
+      }
+      const partion = (arr, left, right) => {
+        let datanum = arr[Math.floor(Math.random() * (right - left + 1) + left)]
+        let i = left,
+          j = right
+        while (i < j) {
+          while (arr[i] < datanum) {
+            i++
+          }
+          while (arr[j] > datanum) {
+            j--
+          }
+          if (i <= j) {
+            swap(arr, i, j)
+            i += 1
+            j -= 1
+          }
+        }
+        return i
+      }
+      const quick = (arr, left, right) => {
+        let index
+        if (left < right) {
+          index = partion(arr, left, right)
+          if (left < index - 1) {
+            quick(arr, left, index - 1)
+          }
+          if (index < right) {
+            quick(arr, index, right)
+          }
+        }
+      }
+      const quickSort = (arr) => {
+        quick(arr, 0, arr.length - 1)
+      }
+      const arr = [100, 0, 23, 1, 5, 6, 2, 4, 1]
+      quickSort(arr)
+      console.log(arr, '===')
+    </script>
+  </body>
+</html>
