@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Array.prototype.method = function () {
+        console.log('原型方法')
+      }
+      let arr = [1, 2, 3, 4, 5]
+
+      let maps = new Map()
+      maps.set('a', 1)
+      maps.set('b', 2)
+      maps.set('c', 3)
+
+      let sets = new Set()
+      sets.add('a')
+      sets.add('b')
+
+      // for...of遍历有迭代器对象的集合
+      for (let a of arr) {
+        console.log(a, '数组')
+      }
+
+      // 获得数组键名以及数组原型上的属性名
+      for (let a in arr) {
+        console.log(a, '数组')
+      }
+
+      // for...of遍历map适合用解构
+      for (let [key, val] of maps) {
+        console.log(key, val, 'map')
+      }
+
+      for (let a of sets) {
+        console.log(a, 'set')
+      }
+
+      Object.prototype.method = function () {
+        console.log('原型属性')
+      }
+      Object.prototype[Symbol('method')] = function () {
+        console.log('Symbol')
+      }
+      let obj = { a: 1, b: 2, c: 3 }
+      Object.defineProperty(obj, 'd', {
+        enumerable: false,
+      })
+      Object.defineProperty(obj, 'dd', {
+        enumerable: true,
+      })
+      Object.defineProperty(obj, Symbol('e'), {
+        enumerable: false,
+      })
+      Object.defineProperty(obj, Symbol('ee'), {
+        enumerable: true,
+      })
+
+      // 只有for...in可以获取到原型上的属性
+      // for..in:可以获取对象自身可枚举属性（包含原型属性、继承属性，不包含symbol）
+      // 可以通过hasOwnProperty判断是否是实例属性
+      for (let a in obj) {
+        console.log(a, 'for...in')
+      }
+      for (let a in obj) {
+        if (obj.hasOwnProperty(a)) {
+          console.log(a, 'for...in   hasOwnProperty')
+        }
+      }
+
+      // Object.getOwnPropertyNames：可以获取对象所有属性（不管是否枚举，但不包含symbol、原型上的）
+      Object.getOwnPropertyNames(obj).forEach((a) => {
+        console.log(a, 'Object.getOwnPropertyNames(obj)')
+      })
+
+      // Object.keys：可以获取对象所有的可枚举属性，不包含继承的、symbol
+      Object.keys(obj).forEach((a) => {
+        console.log(a, 'Object.keys(obj)')
+      })
+
+      // Reflect.ownKeys：可以获取对象所有属性，不分是否枚举、继承、symbol
+      Reflect.ownKeys(obj).forEach((a) => {
+        console.log(a, 'Reflect.ownKeys(obj)')
+      })
+
+      // Object.getOwnPropertySymbols：获取symbol属性（不包含原型的）、不管是否可枚举
+      Object.getOwnPropertySymbols(obj).forEach((a) => {
+        console.log(a, '---Object.getOwnPropertySymbols(obj)')
+      })
+    </script>
+  </body>
+</html>
