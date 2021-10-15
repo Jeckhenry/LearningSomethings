@@ -8,6 +8,16 @@
   </head>
   <body>
     <script>
+      'use strict'
+      var y = function x() {
+        // x = 3
+        console.log(x)
+      }
+      y()
+      function foo() {
+        foo = 2
+      }
+      console.log(foo(), '===')
       Array.prototype.method = function () {
         console.log('原型方法')
       }
