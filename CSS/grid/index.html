@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        display: grid;
+        /* grid-template-columns: 100px 100px 100px 100px; */
+        /* grid-template-columns: repeat(4, 25%); */
+        /* grid-template-columns: repeat(auto-fill, 100px); */
+        /* grid-template-columns: 100px 1fr 2fr; */
+        /* grid-template-columns: 1fr 1fr minmax(100px, 1fr); */
+        grid-template-columns: 100px auto 100px;
+        /* grid-template-columns: repeat(12, 1fr); */
+        grid-template-rows: 100px 100px 100px;
+        /* 旧版本 */
+        /* grid-row-gap: 20px;  */
+        /* 旧版本 */
+        /* grid-column-gap: 20px; */
+        /* gap: 20px; */
+        column-gap: 20px;
+        row-gap: 20px;
+        grid-auto-flow: column;
+      }
+      .item {
+        float: left;
+      }
+      p {
+        display: block;
+      }
+
+      .item2 {
+        grid-area: header;
+      }
+      .item3 {
+        grid-area: menu;
+      }
+      .item4 {
+        grid-area: main;
+      }
+      .item5 {
+        grid-area: right;
+      }
+      .item6 {
+        grid-area: footer;
+      }
+
+      .container2 {
+        display: grid;
+        grid-template-columns: repeat(4, 25%);
+        grid-template-rows: repeat(3, 33.3%);
+        grid-template-areas:
+          'header header header header'
+          'menu main main right'
+          'menu footer footer footer';
+        grid-gap: 20px;
+        background-color: #2196f3;
+      }
+      .container2 > div {
+        background-color: rgba(255, 195, 255, 0.8);
+        text-align: center;
+        padding: 20px 0;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item"><p>p1</p></div>
+      <div class="item"><p>p2</p></div>
+      <div class="item"><p>p3</p></div>
+      <div class="item"><p>p4</p></div>
+      <div class="item"><p>p5</p></div>
+      <div class="item"><p>p6</p></div>
+      <div class="item"><p>p7</p></div>
+    </div>
+    <br />
+    <div class="container2">
+      <div class="item2"><p>header</p></div>
+      <div class="item3"><p>menu</p></div>
+      <div class="item4"><p>main</p></div>
+      <div class="item5"><p>right</p></div>
+      <div class="item6"><p>footer</p></div>
+    </div>
+  </body>
+</html>

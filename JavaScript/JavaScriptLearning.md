@@ -366,3 +366,29 @@ for...in: 用来遍历普通对象，但是会遍历出原型上的属性和方�
 var y = function x() { x = 2 }
 
 在函数外访问 x 将会报错，函数内部重新赋值 x 无效，这段代码在 js 严格模式下会报错
+
+22、TCP 慢启动
+
+23、实现 promise.all
+
+```
+let myPromiseAll = function(promises) {
+    let len = promises.length;
+    if (len === 0) return Promise.resolve([]);
+    let res = [], count = 0;
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < len; i += 1) {
+            Promise.resolve(promises[i]).then(r => {
+                res[i] = r;
+                if (count++ === len) resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        }
+    });
+}
+```
+
+26、requestAnimationFrame 和 eventloop
+
+26、css 动画、js 动画
