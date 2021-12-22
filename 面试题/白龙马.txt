@@ -1,0 +1,103 @@
+1、重构的理解 *
+    在不改变现有功能的前提下，对代码结构进行优化，使得代码可以更好的适应需求的变更
+2、nextTick
+    nextTick是Vue异步更新DOM机制中的方法， Vue在内部对异步队列使用原生的Promise.then、
+    MutationObserver和setImmediate实现这个方法，如果都不支持，就使用settimeout代替。
+
+
+    只要监听到数据变化，Vue就开启一个队列，并缓冲在同一事件中的所有数据变更；
+    如果同一个watcher被触发多次，只会被推入到队列中一次，避免了不必要的计算和DOM操作，然后在
+    下一个的事件循环tick中，Vue刷新队列，执行实际的工作。
+   
+3、构造函数私有属性 *
+    通过闭包来实现私有属性
+    方法1:
+        function Person(name, age) {
+            var height = 170; // 私有属性
+            this.getHeight = function() {
+                return height;
+            }
+
+            this.name = name;
+            this.age = age;
+        }
+    方法2:
+        var Person = (function() {
+            var height = 170;
+            function Inner(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            Inner.prototype.getHeight = function() {
+                return height;
+            }
+            return Inner;
+        })()
+4、继承方式
+    原型链继承
+    构造函数继承
+    组合继承
+
+    原型式继承
+    寄生式继承
+    寄生组合式继承
+
+    es6继承
+5、闭包-柯里化
+    将接受多个参数的函数转变成接受单一参数的函数，并且返回接受余下参数且返回结果的函数
+6、移动端适配方案 rem 原理
+    比如设计稿宽度是750，1rem = clientwidth/750
+    rem是指根元素字体大小
+    em是指父元素字体大小
+8、url 到页面渲染完成的过程、回流、重绘、
+    1）DNS解析获取IP：浏览器缓存-本地host文件-本地DNS服务器缓存-根服务器
+    2）TCP连接
+    3）HTTP请求资源
+    4）解析页面数据，加载页面
+9、slice splice
+    slice：start/end，不包含end，不改变原属组
+    splice：start/num/...params，从选定位置删除或增加元素，回改变原数组
+10、虚拟dom 挂载/替换过程*
+    vue中一个组件实例被初始化时会调用compile模块，将template转化为render函数，
+    这个过程分为两部，template转换为AST；AST转换为render函数。render函数执行后
+    会生成一个虚拟DOM对象，然后根据虚拟DOM生成真实DOM，挂载到页面合适位置。
+    当Vue中数据发生变化需要更新DOM时，会重新调用render函数，生成一个新的虚拟DOM，
+    新的虚拟DOM和旧的虚拟DOM进行比较，得到最小的更新量，然后更新必要的DOM。
+
+    虚拟DOM：便于更新DOM；可以跨平台
+    diff：深度优先，同层比较，首先会有新的开头和旧的开头、旧的结尾比较，新的结尾和旧的开头、
+    旧的结尾比较，如果这四种都没匹配，指针就向中间靠拢，知道开始索引大于结束索引，代表一次
+    diff结束
+11、flat
+    Array.prototype.myFlat = function(dep) {
+        const depth = dep > 0 dep: 1;
+        const f = function(arr, depth) {
+            return depth > 0 ? arr.reduce((acc, cur) => {
+                if (Array.isArray(cur)) {
+                    return [...acc, ...f(cur, depth - 1)];
+                }
+                return [...acc, cur];
+            }, []) : arr;
+        }
+        return f(this, depth);
+    }
+12、webpack打包机制
+    构建流程（原理）：
+    1）初始化参数：解析webpack的配置参数，合并shell传入和webpack.config.js文件配置的参数，形成最终配置结果；
+    2）开始编译：由第一步得到的参数初始化compile对象，注册所有的插件，监听webpack的生命周期，作出相应的反应，执行对象的run方法，
+    开始编译；
+    3）确定入口：从配置的entry入口，开始解析文件构建AST语法树，找出依赖，递归构建语法树；
+    4）编译模块：递归的时候根据文件类型和loader配置，调用所有的loader对文件进行转换，再找出该模块依赖的模块，递归编译，直到
+    所有入口文件及其依赖文件都被编译；
+    5）完成编译并输出：递归完成后，得到了每个文件结果，包含每个模块以及他们之间的依赖关系，根据entry配置生成代码块chunk；
+    6）输出所有chunk到文件系统
+
+13、提高页面加载速度
+    1）减小图片资源，合并雪碧图，减少HTTP请求
+    2）合理使用CDN
+    3）开启GZIP压缩
+    4）css文件放在头部，js尽量放在底部，async/defer
+    5）利用缓存技术，DNS-prefetch等
+
+14、自己的技术输出 
+    闲暇时间做了一个日志分析提效工具

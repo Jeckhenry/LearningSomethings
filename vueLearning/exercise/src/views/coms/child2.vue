@@ -1,6 +1,6 @@
 <template>
   <div style="color: yellow">
-    这是child2
+    这是child2123
     <p>child2inject: {{ dd }}</p>
     <child3></child3>
   </div>
@@ -26,12 +26,21 @@ export default {
   },
   created() {
     console.log("子12组件created");
+    setTimeout(() => {
+      this.dd += "ppp";
+    }, 3000);
   },
   beforeMount() {
     console.log("子12组件beforeMount");
   },
   mounted() {
     console.log("子12组件mounted");
+  },
+  beforeDestroy() {
+    console.log("子12组件组件beforeDestroy");
+  },
+  destroyed() {
+    console.log("子12组件组件destroyed");
   },
 };
 </script>

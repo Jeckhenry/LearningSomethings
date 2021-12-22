@@ -13,7 +13,12 @@
     <input id="asd" type="checkbox" v-model="arr" :value="{ val: 1 }" />
     <label for="asd">选中</label> -->
     {{ ss }}
-    <child3 v-model="ss.name"></child3>
+    <!-- <child3 v-model="ss.name"></child3> -->
+    12
+    <div @click="parentClick" style="background: red">
+      <div style="background: green" @click.stop="childClick">c1</div>
+      <div>c2</div>
+    </div>
   </div>
 </template>
 
@@ -41,8 +46,28 @@ export default {
     // },
     ...mapState("user", ["isLogin", "users"]),
   },
+  beforeRouteEnter(to, from, next) {
+    console.log("home----enter");
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log("home----leave");
+    next();
+  },
+  beforeDestroy() {
+    console.log("home组件beforeDestroy");
+  },
+  destroyed() {
+    console.log("home组件destroyed");
+  },
   methods: {
     ...mapActions(["user/login", "user/logout"]),
+    parentClick() {
+      console.log("parent");
+    },
+    childClick() {
+      console.log("child");
+    },
     goLogin() {
       this["user/login"]("admin").then(() => {
         console.log("success");

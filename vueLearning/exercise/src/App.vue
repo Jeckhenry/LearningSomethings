@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link v-if="isLogin" to="/admin">Admin</router-link>
+      <!-- <router-link v-if="isLogin" to="/admin">Admin</router-link> -->
     </div>
     <router-view />
   </div>
@@ -17,8 +17,8 @@ export default {
     ...mapState("user", ["isLogin"]),
   },
   created() {
-    console.log(this.$router.history.current, "=====");
-    console.log(this.$route, "=====");
+    // console.log(this.$router.history.current, "=====");
+    // console.log(this.$route, "=====");
     // console.log(Object.prototype.isPrototypeOf(1), "=====");
     // console.log(Object.getPrototypeOf(1) === Number.prototype, "=====");
   },
